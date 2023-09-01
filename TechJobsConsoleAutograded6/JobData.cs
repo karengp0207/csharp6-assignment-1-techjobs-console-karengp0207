@@ -42,12 +42,28 @@ namespace TechJobsConsoleAutograded6
          */
 
         //TODO: Complete the FindByValue method
-        public static List<Dictionary<string, string>> FindByValue(string value)
+        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
         {
             // load data, if not already loaded
             LoadData();
 
-            return null;
+            List<Dictionary<string,string>> results = new List<Dictionary<string,string>>();
+
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                foreach (KeyValuePair<string, string> field in job)
+                {
+                    if((field.Value.ToUpper()).Contains(searchTerm.ToUpper()))
+                    {
+                        if(!results.Contains(job))
+                        {
+                            results.Add(job);
+                            break;
+                        }
+                    }
+                }
+            }
+            return results;
         }
 
         /**
@@ -70,7 +86,8 @@ namespace TechJobsConsoleAutograded6
 
 
                 //TODO: Make search case-insensitive
-                if (aValue.Contains(value))
+
+                if ((aValue.ToUpper()).Contains(value.ToUpper()))
                 {
                     jobs.Add(row);
                 }
